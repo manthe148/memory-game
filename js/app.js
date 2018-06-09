@@ -1,6 +1,9 @@
 /*
  * Create a list that holds all of your cards
  */
+const icons = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-paper-plane-o", "fa fa-anchor",
+ "fa fa-anchor", "fa fa-bolt", "fa fa-bolt", "fa fa-cube", "fa fa-cube", "fa fa-leaf", "fa fa-leaf",
+ "fa fa-bicycle", "fa fa-bicycle", "fa fa-bomb", "fa fa-bomb",];
 
 
 /*
@@ -9,26 +12,37 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-/*
-*this is the array for the deck of cards
-*/
-const icons = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-paper-plane-o", "fa fa-anchor",
- "fa fa-anchor", "fa fa-bolt", "fa fa-bolt", "fa fa-cube", "fa fa-cube", "fa fa-leaf", "fa fa-leaf",
- "fa fa-bicycle", "fa fa-bicycle", "fa fa-bomb", "fa fa-bomb",];
+
+
 
  const cardContainer = document.querySelector(".deck")
  let openCards = [];
  let matchedCards = [];
+ startGame()
+ 
+ function startGame(){
+ 	 for (let i = 0; i < icons.length; i++) {
+	 	const card = document.createElement('li');
+	 	card.classList.add("card");
+	 	card.innerHTML = ` <i class="${icons[i]}"></i>`;
+	 	cardContainer.appendChild(card);
+	 	clickable(card);
+ 	}	
+ }
 
  
- for (let i = 0; i < icons.length; i++) {
- 	const card = document.createElement('li');
- 	card.classList.add("card");
- 	card.innerHTML = ` <i class="${icons[i]}"></i>`;
- 	cardContainer.appendChild(card);
- 	// shuffle(icons);
- 
- 	
+ function clickable(card){
+
+ function over(){
+ 	if (matchedCards.length === icons.length) {
+ 		// alert("hello");
+ 		('.alertBox').click(function(){
+ 			alert("yay you did it!");
+ 		});
+ 	} else {
+ 		console.log("not quite!");
+ 	}
+ }
 
  card.addEventListener("click", function(){
  	const firstCard = this;
@@ -40,8 +54,10 @@ const icons = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-p
  			if (firstCard.innerHTML === secondCard.innerHTML) {
  				firstCard.classList.add("match");
  				secondCard.classList.add("match");
+ 				matchedCards.push(firstCard, secondCard);
 
  				openCards = [];
+ 				over();
  			} else {
  				setTimeout(function(){
  					firstCard.classList.remove("open", "show");
@@ -60,14 +76,12 @@ const icons = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-p
  
 
 
-}
+ }
+
+ 
 
 
-var button = getElementById('moves'), count = 0;
- button.onclick = function(){
- 	count +=1;
- 	button.innerHTML = count + "moves";
- };
+
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
