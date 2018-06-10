@@ -14,12 +14,12 @@ const icons = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-p
  */
 
 
-
+ 
  const cardContainer = document.querySelector(".deck")
  let openCards = [];
  let matchedCards = [];
-
-
+ let moves = 0;
+ let starRating = "3"
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -44,7 +44,7 @@ function shuffle(array) {
  */
  shuffle(icons);
  startGame();
- startTimer();
+ 
  
  function startGame(){
  	 for (let i = 0; i < icons.length; i++) {
@@ -68,10 +68,13 @@ function shuffle(array) {
  	}
  }
 
+/*
+*   this checks to see if the cards match and what to do if they do
+*/
+
  card.addEventListener("click", function(){
  	const firstCard = this;
  	const secondCard = openCards[0];
-
  	if (openCards.length === 1) {
  		card.classList.add("open","show");
  		openCards.push("this");
@@ -95,27 +98,39 @@ function shuffle(array) {
  		card.classList.add("open", "show");
  		openCards.push(this);
  	}
+
+    currentMoves();
  });
 }
 
- 
-function startTimer(){
-    let clicks = 0;
-    $(".card").on("click", function(){
-        clicks +=1;
-        if (clicks === 1) {
-            var seconds = 0;
-            function time(val) {
-                return val > 9 ? val : "0" + val;
-            }
-            timer = setInterval( function(){
-                $(".seconds").html(time(++seconds % 60));
-                $(".minutes").html(time(parseInt(seconds / 60, 10)));
-            }, 1000);
-        }
-    })
+/*
+* This is to count the moves (per click!).
+*/
+var add = (function (){
+    var counter = 0;
+    return function() {return counter +=1;}
+})();
+
+function currentMoves(){
+    document.getElementById('moves').innerHTML = add();
 }
 
+// function timer(){
+//     if (openCards.length === 1) {
+//         addEventListener("click", function(){
+//             var timer = setInterval(countTimer, 1000);
+//             var totalSeconds = 0;
+//             function countTimer(){
+//                 ++totalSeconds;
+    
+//                 var minute = Math.floor((totalSeconds)/60);
+//                 var seconds = totalSeconds - (minute*60);
+
+//                 document.getElementById('timer').innerHTML = minute + ":" + seconds;
+//             }
+//         })
+//     }
+// }
 
 
 
