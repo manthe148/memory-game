@@ -18,7 +18,33 @@ const icons = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-p
  const cardContainer = document.querySelector(".deck")
  let openCards = [];
  let matchedCards = [];
- startGame()
+
+
+
+// Shuffle function from http://stackoverflow.com/a/2450976
+function shuffle(array) {
+    var currentIndex = icons.length, temporaryValue, randomIndex;
+
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = icons[currentIndex];
+        icons[currentIndex] = icons[randomIndex];
+        icons[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
+
+
+
+
+ /*
+ * Call functions!
+ */
+ shuffle(icons);
+ startGame();
+ startTimer();
  
  function startGame(){
  	 for (let i = 0; i < icons.length; i++) {
@@ -35,10 +61,8 @@ const icons = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-p
 
  function over(){
  	if (matchedCards.length === icons.length) {
- 		// alert("hello");
- 		('.alertBox').click(function(){
- 			alert("yay you did it!");
- 		});
+ 		alert("great job");
+ 		
  	} else {
  		console.log("not quite!");
  	}
@@ -72,31 +96,29 @@ const icons = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-p
  		openCards.push(this);
  	}
  });
-
- 
-
-
- }
-
- 
-
-
-
-
-// Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
-    var currentIndex = icons.length, temporaryValue, randomIndex;
-
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = icons[currentIndex];
-        icons[currentIndex] = icons[randomIndex];
-        icons[randomIndex] = temporaryValue;
-    }
-
-    return array;
 }
+
+ 
+function startTimer(){
+    let clicks = 0;
+    $(".card").on("click", function(){
+        clicks +=1;
+        if (clicks === 1) {
+            var seconds = 0;
+            function time(val) {
+                return val > 9 ? val : "0" + val;
+            }
+            timer = setInterval( function(){
+                $(".seconds").html(time(++seconds % 60));
+                $(".minutes").html(time(parseInt(seconds / 60, 10)));
+            }, 1000);
+        }
+    })
+}
+
+
+
+
 
 
 /*
