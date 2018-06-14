@@ -44,8 +44,11 @@ function shuffle(array) {
  */
  shuffle(icons);
  startGame();
- 
- 
+ restart();
+ // score();
+ // noDoubles();
+
+
  function startGame(){
  	 for (let i = 0; i < icons.length; i++) {
 	 	const card = document.createElement('li');
@@ -61,7 +64,7 @@ function shuffle(array) {
 
  function over(){
  	if (matchedCards.length === icons.length) {
- 		alert("great job");
+ 		alert(currentMoves + ": moves");
  		
  	} else {
  		console.log("not quite!");
@@ -115,9 +118,56 @@ function currentMoves(){
     document.getElementById('moves').innerHTML = add();
 }
 
-// function timer(){
-//     if (openCards.length === 1) {
-//         addEventListener("click", function(){
+// function score(){
+//     var list = document.getElementsByTagName('stars')
+//     if (currentMoves <= 20) {
+//         console.log("good job");
+//     } else if (currentMoves <= 25)
+//         list.removeChild(childNodes[0]);
+// }
+
+
+
+/*
+* disable double clicks
+*/
+function noDoubles(){
+    document.getElementsByTagName('card').removeEventListener("click");
+}
+
+// function restart(){
+
+//      document.getElementsByTagName('restart');
+//     location.reload();
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//  var theTimer = (function() {   
 //             var timer = setInterval(countTimer, 1000);
 //             var totalSeconds = 0;
 //             function countTimer(){
@@ -126,13 +176,14 @@ function currentMoves(){
 //                 var minute = Math.floor((totalSeconds)/60);
 //                 var seconds = totalSeconds - (minute*60);
 
-//                 document.getElementById('timer').innerHTML = minute + ":" + seconds;
+//                 return countTimer()
 //             }
-//         })
-//     }
+        
+//     })();
+
+// function getTimer(){
+//     document.getElementById('timer').innerHTML = theTimer();
 // }
-
-
 
 
 
