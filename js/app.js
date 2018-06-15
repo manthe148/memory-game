@@ -19,8 +19,7 @@ const icons = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-p
  let openCards = [];
  let matchedCards = [];
  let moves = 0;
- let starRating = "3"
-
+ 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = icons.length, temporaryValue, randomIndex;
@@ -44,10 +43,11 @@ function shuffle(array) {
  */
  shuffle(icons);
  startGame();
- restart();
- // score();
- // noDoubles();
 
+
+/*
+*   Creates the cards
+*/
 
  function startGame(){
  	 for (let i = 0; i < icons.length; i++) {
@@ -59,17 +59,12 @@ function shuffle(array) {
  	}	
  }
 
- 
+ /*
+ *  Make the cards clickable
+ */
+
  function clickable(card){
 
- function over(){
- 	if (matchedCards.length === icons.length) {
- 		alert(currentMoves + ": moves");
- 		
- 	} else {
- 		console.log("not quite!");
- 	}
- }
 
 /*
 *   this checks to see if the cards match and what to do if they do
@@ -79,7 +74,7 @@ function shuffle(array) {
  	const firstCard = this;
  	const secondCard = openCards[0];
  	if (openCards.length === 1) {
- 		card.classList.add("open","show");
+ 		card.classList.add("open","show", "disable");
  		openCards.push("this");
  			if (firstCard.innerHTML === secondCard.innerHTML) {
  				firstCard.classList.add("match");
@@ -90,8 +85,8 @@ function shuffle(array) {
  				over();
  			} else {
  				setTimeout(function(){
- 					firstCard.classList.remove("open", "show");
- 					secondCard.classList.remove("open", "show");
+ 					firstCard.classList.remove("open", "show", "disable");
+ 					secondCard.classList.remove("open", "show", "disable");
 
  					openCards = [];
  				}, 350);
@@ -102,46 +97,66 @@ function shuffle(array) {
  		openCards.push(this);
  	}
 
-    currentMoves();
+    addMoves();
  });
+ 
 }
 
 /*
 * This is to count the moves (per click!).
 */
-var add = (function (){
-    var counter = 0;
-    return function() {return counter +=1;}
-})();
+const moveContainer = document.querySelector('.moves')
+let moving = 0;
+moveContainer.innerHTML = 0;
+function addMoves(){
+    moving++;
+    moveContainer.innerHTML = moving;
 
-function currentMoves(){
-    document.getElementById('moves').innerHTML = add();
+
+  //Calls the Rating function
+
+    rating();
+    
 }
+/*
+* Star Rating
+*/
+ const starContainer = document.querySelector('.stars')
+ const star = `<li><i class="fa fa-star"></i></li>`;
+ starContainer.innerHTML = star + star + star;
+ function rating(){
+    if (moving > 30) {
+        starContainer.innerHTML = star;
+    } else if (moving > 24) {
+        starContainer.innerHTML = star + star;
+    } else {
+        starContainer.innerHTML = star + star + star;
+    }
+ }
+       
+/*
+* Restart the game
+*/
 
-// function score(){
-//     var list = document.getElementsByTagName('stars')
-//     if (currentMoves <= 20) {
-//         console.log("good job");
-//     } else if (currentMoves <= 25)
-//         list.removeChild(childNodes[0]);
-// }
+const restart = document.querySelector('.restart')
+restart.addEventListener("click", function(){
+    window.location.reload();
+});
 
 
 
 /*
-* disable double clicks
+*   Is the game over?
 */
-function noDoubles(){
-    document.getElementsByTagName('card').removeEventListener("click");
-}
 
-// function restart(){
-
-//      document.getElementsByTagName('restart');
-//     location.reload();
-// }
-
-
+ function over(){
+    if (matchedCards.length === icons.length) {
+        alert(" moves");
+        
+    } else {
+        console.log("not quite!");
+    }
+ }
 
 
 
@@ -161,10 +176,9 @@ function noDoubles(){
 
 
 
-
-
-
-
+/*
+*
+*/
 
 
 //  var theTimer = (function() {   
