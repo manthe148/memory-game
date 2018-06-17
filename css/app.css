@@ -81,6 +81,7 @@ h1 {
     font-size: 33px;
 }
 
+
 /*
  * Styles for the Score Panel
  */
@@ -108,13 +109,52 @@ h1 {
     cursor: pointer;
 }
 
-/*
- * Style for the alert box
+ /*
+ * Overlay & Box
  */
 
- .alertBox{
-    color: rgb(225,225,167);
-    width: 350px;
-    height: 350px;
-    background-color: green;
+ .overlay{
+    display: none;
+    opacity: .8;
+    position: fixed;
+    background: #bac;
+    width: 100%
+    z-index:10;
  }
+
+ .box{
+    display: none;
+    position: fixed;
+    background: #5BBDDE;
+    border-radius: 10px;
+    width: 550px;
+    height: 450px;
+    z-index: 10;
+ }
+
+ .box, {
+    background: #bac;
+    margin: 8px;
+  }
+
+  .box,
+  .boxHead {
+    background: #666;
+    font-size: 20px;
+    padding: 10px;
+    color: #ccc;
+  }
+
+  .box,
+  .body {
+    background: #333,
+    padding:20px;
+    color: #fff;
+  }
+
+  .box,
+  .boxFoot {
+    background: #666;
+    padding: 10px;
+    text-align:right;
+  }

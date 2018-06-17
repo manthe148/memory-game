@@ -1,9 +1,22 @@
 /*
  * Create a list that holds all of your cards
  */
-const icons = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-paper-plane-o", "fa fa-anchor",
- "fa fa-anchor", "fa fa-bolt", "fa fa-bolt", "fa fa-cube", "fa fa-cube", "fa fa-leaf", "fa fa-leaf",
- "fa fa-bicycle", "fa fa-bicycle", "fa fa-bomb", "fa fa-bomb",];
+ const icons = ["fa fa-diamond",
+  "fa fa-diamond",
+   "fa fa-paper-plane-o",
+    "fa fa-paper-plane-o",
+     "fa fa-anchor",
+  "fa fa-anchor",
+   "fa fa-bolt",
+    "fa fa-bolt",
+     "fa fa-cube",
+      "fa fa-cube",
+       "fa fa-leaf",
+        "fa fa-leaf",
+  "fa fa-bicycle",
+   "fa fa-bicycle",
+    "fa fa-bomb",
+     "fa fa-bomb",];
 
 
 /*
@@ -13,15 +26,14 @@ const icons = ["fa fa-diamond", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-p
  *   - add each card's HTML to the page
  */
 
-
- 
  const cardContainer = document.querySelector(".deck")
+ const bodyContainer = document.querySelector("body")
  let openCards = [];
  let matchedCards = [];
- let moves = 0;
+ 
  
 // Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
+ function shuffle(array) {
     var currentIndex = icons.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
@@ -33,31 +45,27 @@ function shuffle(array) {
     }
 
     return array;
-}
-
-
-
+ }
 
  /*
  * Call functions!
  */
  shuffle(icons);
  startGame();
+ 
+ /*
+ *   Creates the cards
+ */
 
-
-/*
-*   Creates the cards
-*/
-
- function startGame(){
+  function startGame(){
  	 for (let i = 0; i < icons.length; i++) {
 	 	const card = document.createElement('li');
 	 	card.classList.add("card");
 	 	card.innerHTML = ` <i class="${icons[i]}"></i>`;
 	 	cardContainer.appendChild(card);
 	 	clickable(card);
- 	}	
- }
+ 	 }	
+  }
 
  /*
  *  Make the cards clickable
@@ -66,106 +74,135 @@ function shuffle(array) {
  function clickable(card){
 
 
-/*
-*   this checks to see if the cards match and what to do if they do
-*/
 
- card.addEventListener("click", function(){
- 	const firstCard = this;
- 	const secondCard = openCards[0];
- 	if (openCards.length === 1) {
- 		card.classList.add("open","show", "disable");
- 		openCards.push("this");
- 			if (firstCard.innerHTML === secondCard.innerHTML) {
- 				firstCard.classList.add("match");
- 				secondCard.classList.add("match");
- 				matchedCards.push(firstCard, secondCard);
+ /*
+ *   this checks to see if the cards match and what to do if they do
+ */
 
- 				openCards = [];
- 				over();
- 			} else {
- 				setTimeout(function(){
- 					firstCard.classList.remove("open", "show", "disable");
- 					secondCard.classList.remove("open", "show", "disable");
+    card.addEventListener("click", function(){
+     	const firstCard = this;
+     	const secondCard = openCards[0];
+     	if (openCards.length === 1) {
+     		card.classList.add("open","show", "disable");
+     		openCards.push("this");
+     			if (firstCard.innerHTML === secondCard.innerHTML) {
+     				firstCard.classList.add("match");
+     				secondCard.classList.add("match");
+     				matchedCards.push(firstCard, secondCard);
+                    
+     				openCards = [];
+     				
+     			} else {
+     				setTimeout(function(){
+     					firstCard.classList.remove("open", "show", "disable");
+     					secondCard.classList.remove("open", "show", "disable");
 
- 					openCards = [];
- 				}, 350);
- 			}
+     					openCards = [];
+     				}, 550);
+     			}
+     	} else {
+     		card.classList.add("open", "show");
+     		openCards.push(this);
 
- 	} else {
- 		card.classList.add("open", "show");
- 		openCards.push(this);
- 	}
+     	}
+       //Add moves function
+        addMoves();
+        
+    });
 
-    addMoves();
- });
- 
-}
-
-/*
-* This is to count the moves (per click!).
-*/
-const moveContainer = document.querySelector('.moves')
-let moving = 0;
-moveContainer.innerHTML = 0;
-function addMoves(){
+ }
+startTimer();
+ /*
+ * This is to count the moves (per click!).
+ */
+ const moveContainer = document.querySelector('.moves')
+ let moving = 0;
+ moveContainer.innerHTML = 0;
+ function addMoves(){
     moving++;
     moveContainer.innerHTML = moving;
 
-
   //Calls the Rating function
-
     rating();
-    
-}
-/*
-* Star Rating
-*/
+     
+ }
+ /*
+ * Star Rating
+ */
  const starContainer = document.querySelector('.stars')
  const star = `<li><i class="fa fa-star"></i></li>`;
  starContainer.innerHTML = star + star + star;
  function rating(){
     if (moving > 30) {
         starContainer.innerHTML = star;
-    } else if (moving > 24) {
+    } else if (moving > 25) {
         starContainer.innerHTML = star + star;
     } else {
         starContainer.innerHTML = star + star + star;
     }
  }
        
-/*
-* Restart the game
-*/
+ /*
+ * Restart the game
+ */
 
-const restart = document.querySelector('.restart')
-restart.addEventListener("click", function(){
+ const restart = document.querySelector('.restart')
+ restart.addEventListener("click", function(){
     window.location.reload();
-});
+ });
 
-
-
-/*
-*   Is the game over?
-*/
+ /*
+ *   Is the game over?
+ */
 
  function over(){
     if (matchedCards.length === icons.length) {
-        alert(" moves");
-        
+       
+       stopTimer();
     } else {
         console.log("not quite!");
     }
  }
 
+/*
+*   TIMER OUT-PUT   
+*/
+
+function startTimer(){ 
+let timeVar = setInterval(countTimer, 1000);
+}
+
+function stopTimer(){
+    clearInterval(timeVar);
+    sec = 0;
+    min = 0;
+}
+let totalSec = 0;
+
+function countTimer() {
+    ++totalSec;
+    var hour = Math.floor(totalSec /3600);
+    var min = Math.floor((totalSec - hour*3600)/60);
+    var sec = totalSec - (hour*3600 + min*60);
+
+    if (sec < 10) {
+        sec = `0${sec}`;
+    }
+    if (sec >= 60) {
+        min++;
+        sec = "00";
+    }
+    document.querySelector('.timer').innerHTML = min + ":" + sec;
+}
+
+ 
 
 
 
 
-
-
-
-
+/*
+*   custom alert!
+*/
 
 
 
@@ -181,23 +218,6 @@ restart.addEventListener("click", function(){
 */
 
 
-//  var theTimer = (function() {   
-//             var timer = setInterval(countTimer, 1000);
-//             var totalSeconds = 0;
-//             function countTimer(){
-//                 ++totalSeconds;
-    
-//                 var minute = Math.floor((totalSeconds)/60);
-//                 var seconds = totalSeconds - (minute*60);
-
-//                 return countTimer()
-//             }
-        
-//     })();
-
-// function getTimer(){
-//     document.getElementById('timer').innerHTML = theTimer();
-// }
 
 
 
