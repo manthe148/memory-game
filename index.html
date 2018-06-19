@@ -9,11 +9,17 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-    <div class="overlay"></div>
-    <div class="box">
-        <div class="boxHead"></div>
-        <div class="boxBody"></div>
-        <div class="boxFoot"></div>
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="header"><h1>Congratulations</h1></div>
+            <div id="body">
+                <div id="time"></div>
+                <div id="stars"></div>
+                
+            </div>
+            <div id="footer"><button class="again" onclick="playAgain()">Play Again?</button></div>
+        </div>
     </div>
     
 
@@ -33,6 +39,8 @@
 
             <span class="timer"><span class="minutes">00</span>:<span class="seconds">00</span></span>
 
+            
+
             <div class="restart">
         		<i class="fa fa-repeat"></i>
         	</div>
@@ -42,6 +50,8 @@
             
         </ul>
     </div>
+
+
 
  
 
